@@ -4,4 +4,5 @@ export interface TodoItemType {
   content: string;
   status: string;
   completed: boolean;
+  createdAt: number;
 }

@@ -4,11 +4,9 @@ import { TodoItemType } from "@/types/todo-item";
 import VuexPersist from "vuex-persist";
 
 const vuexPersist = new VuexPersist({
-  key: "my-app", // The key for local storage
-  storage: localStorage, // You can use localStorage or sessionStorage
+  key: "my-app",
+  storage: localStorage,
 });
-
-// Define the state interface
 
 // Create the Vuex store
 const store = createStore<State>({
@@ -21,6 +19,7 @@ const store = createStore<State>({
         status: "in progress",
 
         completed: false,
+        createdAt: new Date().getTime(),
       },
       {
         id: 2,
@@ -28,6 +27,7 @@ const store = createStore<State>({
         content: "Add new projects and update resume",
         status: "todo",
         completed: false,
+        createdAt: new Date().getTime(),
       },
       {
         id: 3,
@@ -35,8 +35,9 @@ const store = createStore<State>({
         content: "Milk, eggs, bread, and fruits",
         status: "done",
         completed: false,
+        createdAt: new Date().getTime(),
       },
-    ], // Example state: toDoList
+    ],
   },
   mutations: {
     addNewTodoItem(state, payload: TodoItemType) {

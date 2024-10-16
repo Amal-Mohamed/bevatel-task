@@ -51,10 +51,12 @@ body {
   letter-spacing: normal !important;
 }
 .completed-todo.todo-item.v-list-item {
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
 }
-.completed-todo .v-list-item-title {
+.completed-todo .v-list-item-title,
+.completed-todo .v-list-item-subtitle {
   text-decoration: line-through;
+  font-style: italic;
 }
 .todo-item.v-list-item .v-checkbox.v-input {
   margin-top: -30px;

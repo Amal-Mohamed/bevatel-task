@@ -2,52 +2,17 @@
 
 ## Project setup
 
-```
-# yarn
-yarn
+1- Clone the project
+2- Run `npm install`
+3- Run `npm run dev`
+4- Open your browser and go to `http://localhost:3000`
+6- For testing, run `npm run test`
+5- Enjoy!
 
-# npm
-npm install
+versions
 
-# pnpm
-pnpm install
-
-# bun
-bun install
-```
-
-### Compiles and hot-reloads for development
-
-```
-# yarn
-yarn dev
-
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# bun
-bun run dev
-```
-
-### Compiles and minifies for production
-
-```
-# yarn
-yarn build
-
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# bun
-bun run build
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://vitejs.dev/config/).
+- Node: 21.2.0
+- Vue: 3
+- Vuetify: 3
+- Vuex: 4
+- Using Typescript

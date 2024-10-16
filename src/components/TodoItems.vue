@@ -7,13 +7,13 @@
         variant="outlined"
         hidde-details
       />
-      <v-btn type="submit" color="green" block height="45" variant="tonal"
+      <v-btn type="submit" color="green" block height="45" :disabled="!newTodo"
         >Add</v-btn
       >
     </v-form>
     <v-divider class="mb-3"></v-divider>
 
-    <div class="px-1">
+    <div class="px-1" v-if="todos && todos.length > 0">
       <p>My list:</p>
       <v-list>
         <transition-group name="slide-fade" tag="div">
@@ -28,6 +28,7 @@
         </transition-group>
       </v-list>
     </div>
+    <p v-else class="text-center">No todos found</p>
 
     <Toaster
       :active="active"
@@ -69,10 +70,26 @@ export default defineComponent({
       completed: false,
       content: "",
       status: "todo",
+      createdAt: 0,
     });
 
     const store = useStore();
-    const todos = computed(() => store.getters.getTodoList);
+    const todos = computed(() => {
+      return store.getters.getTodoList?.sort(
+        (fisrtItem: TodoItemType, secondItem: TodoItemType) => {
+          const statusOrder = ["todo", "in progress", "done"];
+          const statusComparison =
+            statusOrder.indexOf(fisrtItem.status) -
+            statusOrder.indexOf(secondItem.status);
+
+          if (statusComparison === 0) {
+            return secondItem.createdAt - fisrtItem.createdAt;
+          }
+          return statusComparison;
+        }
+      );
+    });
+
     const addTodo = () => {
       if (newTodo.value.trim() !== "") {
         let payloadItem: TodoItemType = {
@@ -81,6 +98,7 @@ export default defineComponent({
           completed: false,
           content: "You Can Add Content Here",
           status: "todo",
+          createdAt: new Date().getTime(),
         };
         store.dispatch("addNewTodoItem", payloadItem);
         setToaster(true, "Todo added successfully!", "success");
@@ -136,26 +154,25 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* Transition classes for slide-fade effect */
 .slide-fade-enter-active,
 .slide-fade-leave-active {
   transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: 0.1s;
 }
 .slide-fade-enter-from,
 .slide-fade-leave-to {
   opacity: 0;
-  transform: translateY(20px); /* Slide in from below */
+  transform: translateY(20px);
 }
 .slide-fade-leave-from {
   opacity: 1;
-  transform: translateY(0); /* Original position */
+  transform: translateY(0);
 }
 .slide-fade-leave-to {
   opacity: 0;
-  transform: translateY(-20px); /* Slide out upwards */
+  transform: translateY(-20px);
 }
 
-/* Optional styling for completed tasks */
 .completed {
   text-decoration: line-through;
   color: gray;

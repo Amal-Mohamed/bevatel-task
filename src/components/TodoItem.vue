@@ -4,14 +4,7 @@
     class="todo-item"
     :class="{ 'completed-todo': todo.completed }"
   >
-    <!-- <v-text-field
-      v-if="editModeIsActive"
-      @keyup.enter="updateTodo"
-      v-model="taskText"
-      variant="outlined"
-    ></v-text-field> -->
-
-    <v-list-content>
+    <div>
       <v-list-item-title>
         {{ todo.task }}
       </v-list-item-title>
@@ -26,7 +19,7 @@
       >
         {{ todo.status }}
       </v-chip>
-    </v-list-content>
+    </div>
 
     <template v-slot:prepend>
       <v-checkbox

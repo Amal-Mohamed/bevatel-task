@@ -4,7 +4,6 @@
       v-model="active"
       top
       right
-      timeout="1000"
       transition="scale-transition"
       :color="status === 'success' ? 'green-darken-3' : 'red-darken-3'"
     >
@@ -24,8 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
-import { ToasterType } from "@/types/toaster";
+import { defineComponent, ref, computed, watch } from "vue";
 
 export default defineComponent({
   props: {
@@ -47,6 +45,7 @@ export default defineComponent({
     const isActive = ref<boolean>(false);
 
     const closeToaster = () => {
+      isActive.value = false;
       emit("close");
     };
 
@@ -56,6 +55,14 @@ export default defineComponent({
         isActive.value = value;
       },
     });
+
+    // watch(
+    //   () => props.active,
+    //   (newValue) => {
+    //     console.log("watch", newValue);
+    //     isActive.value = newValue;
+    //   }
+    // );
 
     return {
       closeToaster,
