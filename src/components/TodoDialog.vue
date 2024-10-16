@@ -2,22 +2,27 @@
   <div class="text-center pa-4">
     <v-dialog v-model="active" width="800">
       <v-card prepend-icon="mdi-update" title="Update Todo">
-        <div class="pa-6">
+        <v-form class="pa-6" v-model="valid" ref="form">
           <v-text-field
             v-model="data.task"
-            label="Task"
+            label="Task*"
             required
             variant="outlined"
+            :rules="titleRules"
+            class="mb-1"
           />
           <v-text-field
             v-model="data.content"
             label="Content"
             required
             variant="outlined"
+            class="mb-1"
           />
 
           <v-select
+            color="green"
             v-model="data.status"
+            :rules="statusRules"
             label="Status"
             required
             variant="outlined"
@@ -34,11 +39,16 @@
               color="green"
               >Cancel</v-btn
             >
-            <v-btn width="150" height="50" @click="updateTodo" color="green"
+            <v-btn
+              width="150"
+              height="50"
+              @click="updateTodo"
+              color="green"
+              :disabled="!valid"
               >Update</v-btn
             >
           </div>
-        </div>
+        </v-form>
       </v-card>
     </v-dialog>
   </div>
@@ -47,6 +57,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, watch } from "vue";
 import { TodoItemType } from "@/types/todo-item";
+// import { useField, useForm } from "vee-validate";
 
 export default defineComponent({
   props: {
@@ -63,6 +74,13 @@ export default defineComponent({
   setup(props, { emit }) {
     const isActive = ref<boolean>(false);
     const taskStatus = ref(props.data.status);
+    const titleRules = [
+      (v: string) => !!v || "Title is required",
+      (v: string) =>
+        (v && v.length <= 50) || "Title must be less than 50 characters",
+    ];
+    const statusRules = [(v: string) => !!v || "Status is required"];
+    const valid = ref(false);
 
     const closeDialog = () => {
       emit("close");
@@ -92,6 +110,9 @@ export default defineComponent({
       isActive,
       active,
       taskStatus,
+      titleRules,
+      valid,
+      statusRules,
     };
   },
 });
